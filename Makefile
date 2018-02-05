@@ -2,7 +2,7 @@
 
 CC = g++
 CFLAGS = -c -std=c++11 -fPIC -g
-LD_FLAG = -lpthread -lboost_system
+LD_FLAG = -lpthread -lboost_system -lsocket
 OFLAG  = -o
 
 ARCH = $(shell uname)
