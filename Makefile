@@ -1,9 +1,18 @@
 # Makefile to build server
 
-CFLAGS = -c -m64 -std=c++11 -fPIC -g
-OFLAG  = -o
-LD_FLAG = -lpthread -lboost_system
 CC = g++
+CFLAGS = -c -std=c++11 -fPIC -g
+LD_FLAG = -lpthread -lboost_system
+OFLAG  = -o
+
+ARCH = $(shell uname)
+
+ifeq ($(ARCH),SunOS)
+LIB_DIR = -L/opt/csw/gxx/lib
+INC_DIR = -I/opt/csw/gxx/include
+endif
+
+
 
 SERVER_SRC = server.cpp 
 
@@ -17,10 +26,10 @@ all : $(SERVER_EXE)
 
 .PHONY: $(SERVER_EXE)
 $(SERVER_EXE) : $(SERVER_OBJ)
-	$(CC) $(OFLAG) $@ $^ $(LD_FLAG) 
+	$(CC) $(OFLAG) $@ $^ $(LD_FLAG) $(LIB_DIR)
 
 %.o : %.cpp
-	$(CC) $(CFLAGS) $(OFLAG) $@ $< $(LD_FLAG)
+	$(CC) $(CFLAGS) $(OFLAG) $@ $< $(LD_FLAG) $(INC_DIR)
 
 
 .PHONY : clean
